@@ -1,6 +1,21 @@
 import * as fs from "fs";
 
-const filePath = "./input.txt";
+async function readFileContent(filePath: string): Promise<string> {
+  try {
+    const data = await fs.promises.readFile(filePath, "utf8");
+    return data;
+  } catch (err) {
+    console.error(`Error in reading file: ${err}`);
+    throw err;
+  }
+}
+
+function processData(data: string): number {
+  const lines = data.split("\n");
+  const allNumbers = lines.map(getNumberFromLine);
+  const sum = allNumbers.reduce((a, b) => a + b, 0);
+  return sum;
+}
 
 const getNumberFromLine = (line: string) => {
   const digits = line.match(/\d/g) || [];
@@ -12,19 +27,16 @@ const getNumberFromLine = (line: string) => {
   return Number(firstDigit! + lastDigit!);
 };
 
-fs.readFile("./input.txt", "utf8", (err, data) => {
-  if (err) {
-    console.error(`Error in reading file: ${err}`);
-    return;
+async function main() {
+  const filePath = process.argv[2] || "input.txt"; // node file.ts input.txt
+
+  try {
+    const fileContent = await readFileContent(filePath);
+    const result = processData(fileContent);
+    console.log(result);
+  } catch (err) {
+    console.error("Error occurred:", err);
   }
+}
 
-  // console.log(`File Content: ${data}`);
-
-  const lines = data.split("\n");
-
-  const allNumbers = lines.map(getNumberFromLine);
-
-  const sum = allNumbers.reduce((a, b) => a + b, 0);
-
-  console.log(sum);
-});
+main();
