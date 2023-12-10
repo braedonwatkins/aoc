@@ -42,9 +42,18 @@ const colorCount: ColorCount = {
 
 function partOne(lines: Array<string>) {
   lines.map((line: string) => {
-    let game = line.split(":");
-    let gameId: number = Number(game[0].match(/\d+/));
-    console.log(gameId);
+    let idGameSplit = line.split(":");
+    let gameId: number = Number(idGameSplit[0].match(/\d+/));
+    // console.log(gameId);
+
+    let game = idGameSplit[1];
+    // console.log(counts);
+
+    let rounds = game.split(";");
+    // console.log(rounds);
+
+    let counts = rounds.map((round) => round.split(","));
+    console.log(counts);
   });
 }
 
