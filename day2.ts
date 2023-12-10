@@ -52,8 +52,10 @@ function partOne(lines: Array<string>) {
     let rounds = game.split(";");
     // console.log(rounds);
 
-    let counts = rounds.map((round) => round.split(","));
-    console.log(counts);
+    rounds.map((round) => {
+      let counts = round.split(",");
+      console.log(counts);
+    });
   });
 }
 
