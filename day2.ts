@@ -24,8 +24,6 @@ async function main() {
 
 main();
 
-/************** END BOILERPLATE *****************/
-
 function processData(data: string): any {
   // console.log(`File Content: ${data}`);
 
