@@ -40,11 +40,21 @@ const colorCount: ColorCount = {
   "blue": 0,
 };
 
+const hardCoded: ColorCount = {
+  "red": 12,
+  "green": 13,
+  "blue": 14,
+};
+
+const winningRounds: Array<number> = [];
+
 function partOne(lines: Array<string>) {
   lines.map((line: string) => {
     let idGameSplit = line.split(":");
     let gameId: number = Number(idGameSplit[0].match(/\d+/));
     // console.log(gameId);
+
+    winningRounds.push(gameId); // we will remove if the round loses
 
     let game = idGameSplit[1];
     // console.log(counts);
@@ -63,6 +73,9 @@ function partOne(lines: Array<string>) {
           throw new Error(
             `Was unable to extract color from count string, ${count}`
           );
+
+        //TODO: need to do this in a foreach or something where I can bail bc i dont want to pop multiple times
+        if (hardCoded[`${countColor}`] < countNum) winningRounds.pop(); // removes the "winning" round
       });
     });
   });
