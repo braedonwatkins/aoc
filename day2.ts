@@ -55,6 +55,15 @@ function partOne(lines: Array<string>) {
     rounds.map((round) => {
       let counts = round.split(",");
       console.log(counts);
+
+      counts.map((count) => {
+        let countNum: number = Number(count.match(/\d+/));
+        let countColor: string | undefined = count.match(/red|blue|green/)?.[0];
+        if (!countColor)
+          throw new Error(
+            `Was unable to extract color from count string, ${count}`
+          );
+      });
     });
   });
 }
