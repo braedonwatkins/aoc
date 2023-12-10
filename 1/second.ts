@@ -51,15 +51,10 @@ const numStrObj: NumStrObjType = {
 };
 
 const getNumberFromLine = (line: string) => {
-  const spelledNumsStr = `/one|two|three|four|five|six|seven|eight|nine/`;
-  const numsStr = `/\d/`;
+  // console.log(matches);
 
-  // const combinedRegex = new RegExp();
-
-  const matches =
-    line.match(/one|two|three|four|five|six|seven|eight|nine|\d/g) || [];
-  console.log(matches);
-
+  const matches = [];
+  return 0;
   if (matches.length === 0) return 0;
 
   let firstDigit: string = matches[0]!;
@@ -71,6 +66,7 @@ const getNumberFromLine = (line: string) => {
   if (lastDigit in numStrObj)
     lastDigit = numStrObj[lastDigit as keyof NumStrObjType];
 
+  console.log(firstDigit, lastDigit);
   return Number(firstDigit + lastDigit);
 };
 
