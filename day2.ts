@@ -29,9 +29,10 @@ main();
 
 function partOne(lines: Array<string>) {
   lines.map((line: string) => {
-    let gameId: number = Number(line.match(/Game (\d+)/)?.[1] ?? "0");
+    let game = line.split(":");
+    let gameId: number = Number(game[0].match(/\d+/));
     console.log(gameId);
-    if (gameId === 0) throw new Error("gameId was not parsed correctly");
+    // if (gameId === 0) throw new Error("gameId was not parsed correctly");
   });
 }
 
