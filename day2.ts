@@ -76,7 +76,6 @@ function partOne(lines: Array<string>) {
               `Was unable to extract color from count string, ${count}`
             );
 
-          //TODO: need to do this in a foreach or something where I can bail bc i dont want to pop multiple times
           if (hardCoded[countColor as keyof ColorCount] < countNum) {
             winningRounds.pop(); // removes the "winning" round
             throw new Error("round lost, exit this instance");
