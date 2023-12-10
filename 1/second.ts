@@ -52,36 +52,32 @@ const numStrObj: NumStrObjType = {
 };
 
 const getNumberFromLine = (line: string) => {
-  const spelledNumsStr = `/one|two|three|four|five|six|seven|eight|nine/`;
-  const numsStr = `/\d/`;
-
   const regex = new RegExp(
     `one|two|three|four|five|six|seven|eight|nine|\\d`,
     "g"
   );
 
   let match;
-  let firstMatch: string = "-1";
-  let lastMatch: string = "-1";
+  let firstMatch: string = "0";
+  let lastMatch: string = "0";
 
   while ((match = regex.exec(line)) !== null) {
-    if (firstMatch === "-1") {
+    if (firstMatch === "0") {
       firstMatch = match[0];
     }
-    console.log(regex);
     lastMatch = match[0];
 
     regex.lastIndex = match.index + 1;
   }
 
-  console.log(firstMatch, lastMatch);
   if (firstMatch in numStrObj) firstMatch = numStrObj[firstMatch];
   if (lastMatch in numStrObj) lastMatch = numStrObj[lastMatch];
 
+  console.log(firstMatch, lastMatch);
   return Number(firstMatch! + lastMatch!);
 };
 
-function processData(data: string): any {
+function processData(data: string): number {
   // console.log(`File Content: ${data}`);
 
   const lines = data.split("\n");
