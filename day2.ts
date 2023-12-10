@@ -27,12 +27,24 @@ async function main() {
 
 main();
 
+/*************** BOILERPLATE END ***************/
+
+type ColorCount = {
+  "r": number;
+  "g": number;
+  "b": number;
+};
+const colorCount: ColorCount = {
+  "r": 0,
+  "g": 0,
+  "b": 0,
+};
+
 function partOne(lines: Array<string>) {
   lines.map((line: string) => {
     let game = line.split(":");
     let gameId: number = Number(game[0].match(/\d+/));
     console.log(gameId);
-    // if (gameId === 0) throw new Error("gameId was not parsed correctly");
   });
 }
 
