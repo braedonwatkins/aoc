@@ -30,14 +30,14 @@ main();
 /*************** BOILERPLATE END ***************/
 
 type ColorCount = {
-  "r": number;
-  "g": number;
-  "b": number;
+  "red": number;
+  "green": number;
+  "blue": number;
 };
 const colorCount: ColorCount = {
-  "r": 0,
-  "g": 0,
-  "b": 0,
+  "red": 0,
+  "green": 0,
+  "blue": 0,
 };
 
 function partOne(lines: Array<string>) {
