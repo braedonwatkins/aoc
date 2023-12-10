@@ -29,13 +29,17 @@ function processData(data: string): any {
 
   const lines = data.split("\n");
 
-  partOne();
+  return partOne(lines);
 
   partTwo();
-
-  return null;
 }
 
-const partOne = () => {};
+function partOne(lines: Array<string>) {
+  lines.map((line: string) => {
+    let gameId: number = Number(line.match(/Game (\d+)/)?.[1] ?? "0");
+    console.log(gameId);
+    if (gameId === 0) return -1;
+  });
+}
 
-const partTwo = () => {};
+function partTwo() {}
