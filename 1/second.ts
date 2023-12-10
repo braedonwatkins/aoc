@@ -27,6 +27,7 @@ main();
 /************** END BOILERPLATE  *****************/
 
 type NumStrObjType = {
+  [key: string]: string;
   one: string;
   two: string;
   three: string;
@@ -54,24 +55,30 @@ const getNumberFromLine = (line: string) => {
   const spelledNumsStr = `/one|two|three|four|five|six|seven|eight|nine/`;
   const numsStr = `/\d/`;
 
-  // const combinedRegex = new RegExp();
+  const regex = new RegExp(
+    `one|two|three|four|five|six|seven|eight|nine|\\d`,
+    "g"
+  );
 
-  const matches =
-    line.match(/one|two|three|four|five|six|seven|eight|nine|\d/g) || [];
-  console.log(matches);
+  let match;
+  let firstMatch: string = "-1";
+  let lastMatch: string = "-1";
 
-  if (matches.length === 0) return 0;
+  while ((match = regex.exec(line)) !== null) {
+    if (firstMatch === "-1") {
+      firstMatch = match[0];
+    }
+    console.log(regex);
+    lastMatch = match[0];
 
-  let firstDigit: string = matches[0]!;
-  let lastDigit: string =
-    matches.length > 1 ? matches[matches.length - 1]! : firstDigit!;
+    regex.lastIndex = match.index + 1;
+  }
 
-  if (firstDigit in numStrObj)
-    firstDigit = numStrObj[firstDigit as keyof NumStrObjType];
-  if (lastDigit in numStrObj)
-    lastDigit = numStrObj[lastDigit as keyof NumStrObjType];
+  console.log(firstMatch, lastMatch);
+  if (firstMatch in numStrObj) firstMatch = numStrObj[firstMatch];
+  if (lastMatch in numStrObj) lastMatch = numStrObj[lastMatch];
 
-  return Number(firstDigit + lastDigit);
+  return Number(firstMatch! + lastMatch!);
 };
 
 function processData(data: string): any {
