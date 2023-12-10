@@ -64,7 +64,7 @@ function partOne(lines: Array<string>) {
 
     rounds.map((round) => {
       let counts = round.split(",");
-      console.log(counts);
+      // console.log(counts);
 
       try {
         counts.forEach((count) => {
@@ -84,12 +84,13 @@ function partOne(lines: Array<string>) {
         });
       } catch (err) {
         // console.log(err);
-        console.log(`round ${gameId} lost, exit this instance`);
+        // console.log(`round ${gameId} lost, exit this instance`);
       }
     });
-
-    console.log(winningRounds);
+    // console.log(winningRounds);
   });
+  // console.log(winningRounds.reduce((v, s) => v + s));
+  return winningRounds.reduce((v, s) => v + s);
 }
 
 function partTwo() {}
