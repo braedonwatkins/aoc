@@ -34,6 +34,8 @@ type ColorCount = {
   "green": number;
   "blue": number;
 };
+type Color = keyof ColorCount;
+
 const colorCount: ColorCount = {
   "red": 0,
   "green": 0,
@@ -49,47 +51,39 @@ const hardCoded: ColorCount = {
 const winningRounds: Array<number> = [];
 
 function partOne(lines: Array<string>) {
-  lines.map((line: string) => {
-    let idGameSplit = line.split(":");
-    let gameId: number = Number(idGameSplit[0].match(/\d+/));
-    // console.log(gameId);
+  let totalScore = 0;
 
-    winningRounds.push(gameId); // we will remove if the round loses
+  lines.forEach((line: string) => {
+    let [gameIdStr, game] = line.split(": ");
+    let gameId = parseInt(gameIdStr.replace("Game ", ""));
+    let isWinningGame = true;
 
-    let game = idGameSplit[1];
-    // console.log(counts);
+    let rounds = game.split("; ");
+    rounds.forEach((round) => {
+      if (!isWinningGame) return;
 
-    let rounds = game.split(";");
-    // console.log(rounds);
+      let counts = round.split(", ");
+      let currentColorCount = { ...colorCount };
 
-    rounds.map((round) => {
-      let counts = round.split(",");
-      // console.log(counts);
+      for (let count of counts) {
+        let [numStr, color] = count.split(" ");
+        let num = parseInt(numStr);
+        let colorKey = color as Color; // Asserting the type
 
-      try {
-        counts.forEach((count) => {
-          let countNum: number = Number(count.match(/\d+/));
-          let countColor: string | undefined =
-            count.match(/red|blue|green/)?.[0];
-          if (!countColor)
-            throw new Error(
-              `Was unable to extract color from count string, ${count}`
-            );
-
-          if (hardCoded[countColor as keyof ColorCount] < countNum) {
-            winningRounds.pop(); // removes the "winning" round
-            throw new Error("round lost, exit this instance");
-          }
-        });
-      } catch (err) {
-        // console.log(err);
-        // console.log(`round ${gameId} lost, exit this instance`);
+        currentColorCount[colorKey] += num;
+        if (currentColorCount[colorKey] > hardCoded[colorKey]) {
+          isWinningGame = false;
+          break;
+        }
       }
     });
-    // console.log(winningRounds);
+
+    if (isWinningGame) {
+      totalScore += gameId;
+    }
   });
-  // console.log(winningRounds.reduce((v, s) => v + s));
-  return winningRounds.reduce((v, s) => v + s);
+
+  return totalScore;
 }
 
 function partTwo() {}
