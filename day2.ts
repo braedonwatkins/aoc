@@ -16,8 +16,8 @@ async function main() {
 
   try {
     const lines = await readFileContent(filePath);
-    const result = partOne(lines);
-    // const result = partTwo(lines);
+    // const result = partOne(lines);
+    const result = partTwo(lines);
 
     console.log("RESULT:", result);
   } catch (err) {
@@ -80,4 +80,42 @@ function partOne(lines: Array<string>) {
   return totalScore;
 }
 
-function partTwo() {}
+function partTwo(lines: Array<string>) {
+  let totalScore = 0;
+
+  lines.forEach((line: string) => {
+    let maxColor: ColorCount = {
+      "red": -1,
+      "green": -1,
+      "blue": -1,
+    };
+    let [gameIdStr, game] = line.split(": ");
+    let gameId = parseInt(gameIdStr.replace("Game ", ""));
+    let isWinningGame = true;
+
+    let rounds = game.split("; ");
+
+    rounds.forEach((round) => {
+      let counts = round.split(", ");
+      let currentColorCount = { ...colorCount };
+
+      for (let count of counts) {
+        let [numStr, color] = count.split(" ");
+        let num = parseInt(numStr);
+        let colorKey = color as Color;
+
+        currentColorCount[colorKey] = num;
+
+        if (currentColorCount[colorKey] > maxColor[colorKey])
+          maxColor[colorKey] = currentColorCount[colorKey];
+        if (currentColorCount[colorKey] > hardCoded[colorKey])
+          isWinningGame = false;
+      }
+    });
+
+    console.log(maxColor);
+    if (isWinningGame) totalScore += gameId;
+  });
+
+  return totalScore;
+}
