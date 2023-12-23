@@ -80,8 +80,12 @@ function partOne(lines: Array<string>) {
   return totalScore;
 }
 
+const colorPower = (colors: ColorCount): number =>
+  colors.red * colors.green * colors.blue;
+
 function partTwo(lines: Array<string>) {
   let totalScore = 0;
+  let powerSum = 0;
 
   lines.forEach((line: string) => {
     let maxColor: ColorCount = {
@@ -113,9 +117,10 @@ function partTwo(lines: Array<string>) {
       }
     });
 
-    console.log(maxColor);
+    powerSum += colorPower(maxColor);
+    console.log(maxColor, powerSum);
     if (isWinningGame) totalScore += gameId;
   });
 
-  return totalScore;
+  return powerSum;
 }
