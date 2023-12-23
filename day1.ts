@@ -1,30 +1,35 @@
 import * as fs from "fs";
 
-async function readFileContent(filePath: string): Promise<string> {
-  try {
-    const data = await fs.promises.readFile(filePath, "utf8");
-    return data;
-  } catch (err) {
+const filePath = "./input.txt";
+
+const getNumberFromLine = (line: string) => {
+  const digits = line.match(/\d/g) || [];
+  if (digits.length === 0) return 0;
+
+  const firstDigit = digits[0];
+  const lastDigit = digits.length > 1 ? digits[digits.length - 1] : firstDigit;
+
+  return Number(firstDigit! + lastDigit!);
+};
+
+fs.readFile("./input.txt", "utf8", (err, data) => {
+  if (err) {
     console.error(`Error in reading file: ${err}`);
-    throw err;
+    return;
   }
-}
 
-async function main() {
-  const filePath = process.argv[2] || "input.txt"; // node file.ts input.txt
+  // console.log(`File Content: ${data}`);
 
-  try {
-    const fileContent = await readFileContent(filePath);
-    const result = processData(fileContent);
-    console.log("RESULT:", result);
-  } catch (err) {
-    console.error("Error occurred:", err);
-  }
-}
+  const lines = data.split("\n");
 
-main();
+  const allNumbers = lines.map(getNumberFromLine);
 
-/************** END BOILERPLATE  *****************/
+  const sum = allNumbers.reduce((a, b) => a + b, 0);
+
+  console.log(sum);
+});
+
+// DAY 2
 
 type NumStrObjType = {
   [key: string]: string;
@@ -51,7 +56,7 @@ const numStrObj: NumStrObjType = {
   "nine": "9",
 };
 
-const getNumberFromLine = (line: string) => {
+const getNumberFromLine2 = (line: string) => {
   const regex = new RegExp(
     `one|two|three|four|five|six|seven|eight|nine|\\d`,
     "g"
