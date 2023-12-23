@@ -29,6 +29,12 @@ main();
 
 /************** END BOILERPLATE *****************/
 
+/*TODO: 
+  1. represent input as 2D array
+  2. iterate linearly checking for concurrent digits
+  3. check their adjacencies for non-period non-digit symbols
+  4. concat, parseInt, and sum if it passes
+*/
 const partOne = (lines: Array<string>) => {};
 
 const partTwo = (lines: Array<string>) => {};
