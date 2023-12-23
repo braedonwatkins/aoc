@@ -48,8 +48,6 @@ const hardCoded: ColorCount = {
   "blue": 14,
 };
 
-const winningRounds: Array<number> = [];
-
 function partOne(lines: Array<string>) {
   let totalScore = 0;
 
@@ -68,19 +66,15 @@ function partOne(lines: Array<string>) {
       for (let count of counts) {
         let [numStr, color] = count.split(" ");
         let num = parseInt(numStr);
-        let colorKey = color as Color; // Asserting the type
+        let colorKey = color as Color;
 
-        currentColorCount[colorKey] += num;
-        if (currentColorCount[colorKey] > hardCoded[colorKey]) {
+        currentColorCount[colorKey] = num;
+        if (currentColorCount[colorKey] > hardCoded[colorKey])
           isWinningGame = false;
-          break;
-        }
       }
     });
 
-    if (isWinningGame) {
-      totalScore += gameId;
-    }
+    if (isWinningGame) totalScore += gameId;
   });
 
   return totalScore;
