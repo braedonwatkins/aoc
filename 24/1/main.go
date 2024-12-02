@@ -2,7 +2,6 @@ package main
 
 import (
 	"aoc/utils"
-	"fmt"
 	"slices"
 	"strconv"
 	"strings"
@@ -91,8 +90,8 @@ func partTwo(data string) int {
 }
 
 func main() {
-	data := utils.FileParser("test.txt")
+	_ = utils.FileParser("test.txt")
 	// ans := partOne(data)
-	ans := partTwo(data)
-	fmt.Println(ans)
+	// ans := partTwo(data)
+	// fmt.Println(ans)
 }
