@@ -46,28 +46,42 @@ func partOne(data string) int {
 }
 
 func partTwo(data string) int {
+	isEnabled := true
 	byteData := []byte(data)
-
-	//PERF: ideally we do this in one pass instead of 3... O(n) is O(n) ig lol
-	multIndeces := multRegex.FindAllIndex(byteData, -1)
-	doIndeces := doRegex.FindAllIndex(byteData, -1)
-	dontIndeces := dontRegex.FindAllIndex(byteData, -1)
-
-	fmt.Println(multIndeces, doIndeces, dontIndeces)
-
-	//2. process multiplications
 	total := 0
-	// for _, match := range allMatches {
-	// 	total += multOp(match)
-	// }
 
+	for i := 0; i < len(byteData); {
+		if !isEnabled {
+			nextDoIndeces := doRegex.FindIndex(byteData[i:])
+			if nextDoIndeces == nil {
+				return total
+			}
+			i += nextDoIndeces[1]
+			isEnabled = true
+		} else {
+			nextMultIndeces := multRegex.FindIndex(byteData[i:])
+			nextDontIndeces := dontRegex.FindIndex(byteData[i:])
+
+			if nextMultIndeces == nil {
+				return total
+			}
+
+			if nextDontIndeces == nil || nextMultIndeces[1] < nextDontIndeces[1] {
+				multStr := multRegex.Find(byteData[i:])
+				total += multOp(string(multStr))
+				i += nextMultIndeces[1]
+			} else {
+				i += nextDontIndeces[1]
+				isEnabled = false
+			}
+		}
+	}
 	return total
-
 }
 
 func main() {
 	data := utils.FileParser("input.txt")
-	ans := partOne(data)
-	// ans := partTwo(data)
+	// ans := partOne(data)
+	ans := partTwo(data)
 	fmt.Println(ans)
 }
