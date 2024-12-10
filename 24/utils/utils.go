@@ -15,3 +15,22 @@ func FileParse(path string) string {
 	return string(data)
 
 }
+
+func LineParse(data string) []string {
+	return strings.Split(data, "\n")
+}
+
+func GridParse(data string) [][]byte {
+	lines := LineParse(data)
+	grid := make([][]byte, len(lines))
+	for i := range grid {
+		grid[i] = make([]byte, len(lines[i]))
+	}
+
+	for i := 0; i < len(lines); i++ {
+		for j := 0; j < len(lines[i]); j++ {
+			grid[i][j] = lines[i][j]
+		}
+	}
+	return grid
+}
