@@ -17,6 +17,8 @@ func FileParse(path string) string {
 }
 
 func LineParse(data string) []string {
+	data = strings.TrimRight(data, "\n") // remove any extra lines at the end
+
 	return strings.Split(data, "\n")
 }
 
