@@ -134,7 +134,7 @@ func partTwo(data string) int {
 }
 
 func main() {
-	data := utils.FileParser("input.txt")
+	data := utils.FileParse("input.txt")
 	ans1 := partOne(data)
 	ans2 := partTwo(data)
 	fmt.Println(ans1, ans2)

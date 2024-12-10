@@ -90,7 +90,7 @@ func partTwo(data string) int {
 }
 
 func main() {
-	_ = utils.FileParser("test.txt")
+	_ = utils.FileParse("test.txt")
 	// ans := partOne(data)
 	// ans := partTwo(data)
 	// fmt.Println(ans)

@@ -6,7 +6,7 @@ import (
 )
 
 func TestOne(t *testing.T) {
-	input := utils.FileParser("test.txt")
+	input := utils.FileParse("test.txt")
 	result := partOne(input)
 	expected := 2
 
@@ -20,7 +20,7 @@ func TestOne(t *testing.T) {
 }
 
 func TestTwo(t *testing.T) {
-	input := utils.FileParser("test.txt")
+	input := utils.FileParse("test.txt")
 	result := partTwo(input)
 	expected := 4
 
