@@ -10,21 +10,48 @@ import (
 
  */
 
-var directions = [][]int{
-	{-1, 0},  //N
+var diagonalDir = [][]int{
 	{-1, 1},  //NE
-	{0, 1},   //E
 	{1, 1},   //SE
-	{1, 0},   //S
 	{1, -1},  //SW
-	{0, -1},  //W
 	{-1, -1}, //NW
 }
 
-var word = []byte{'X', 'M', 'A', 'S'}
+var cardinalDir = [][]int{
+	{-1, 0}, //N
+	{0, 1},  //E
+	{1, 0},  //S
+	{0, -1}, //W
+}
 
-func findWord(grid [][]byte, dir []int, startRow int, startCol int, numRows int, numCols int) bool {
-	wordLen := len(word)
+var word_1 = []byte{'X', 'M', 'A', 'S'}
+var word_2 = []byte{'M', 'A', 'S'}
+
+func findMAS(grid [][]byte, startRow int, startCol int, numRows int, numCols int) bool {
+
+	if grid[startRow][startCol] != 'A' || startRow-1 < 0 || startRow+1 > numRows-1 || startCol-1 < 0 || startCol+1 > numCols-1 {
+		return false
+	}
+
+	/*
+	   M . M
+	   . A .
+	   S . S
+	*/
+	isTopM := grid[startRow-1][startCol-1] == 'M' && grid[startRow-1][startCol+1] == 'M' && grid[startRow+1][startCol-1] == 'S' && grid[startRow+1][startCol+1] == 'S'
+	isLeftM := grid[startRow-1][startCol-1] == 'M' && grid[startRow+1][startCol-1] == 'M' && grid[startRow-1][startCol+1] == 'S' && grid[startRow+1][startCol+1] == 'S'
+	isRightM := grid[startRow-1][startCol+1] == 'M' && grid[startRow+1][startCol+1] == 'M' && grid[startRow-1][startCol-1] == 'S' && grid[startRow+1][startCol-1] == 'S'
+	isBotM := grid[startRow+1][startCol-1] == 'M' && grid[startRow+1][startCol+1] == 'M' && grid[startRow-1][startCol+1] == 'S' && grid[startRow-1][startCol-1] == 'S'
+
+	if isTopM || isLeftM || isRightM || isBotM {
+		return true
+	}
+
+	return false
+}
+
+func findXMAS(grid [][]byte, dir []int, startRow int, startCol int, numRows int, numCols int) bool {
+	wordLen := len(word_1)
 	yDir := dir[0]
 	xDir := dir[1]
 
@@ -35,7 +62,7 @@ func findWord(grid [][]byte, dir []int, startRow int, startCol int, numRows int,
 		return false
 	}
 
-	for i, letter := range word {
+	for i, letter := range word_1 {
 		r := startRow + yDir*i
 		c := startCol + xDir*i
 
@@ -53,21 +80,26 @@ func partOne(data string) int {
 	// fmt.Println(data)
 	// fmt.Println(grid)
 
+	//NOTE: this is just here for abstraction into the second part
+	var directions = [][]int{}
+	directions = append(directions, diagonalDir...)
+	directions = append(directions, cardinalDir...)
+
 	grid := utils.GridParse(data)
 	numRows := len(grid)
 	numCols := len(grid[0]) // assuming constant grid size
 	count := 0
 
 	// fmt.Println(numRows, numCols)
-	for i, row := range grid {
-		fmt.Printf("Row %d: %v\n", i, row)
-	}
+	// for i, row := range grid {
+	// 	fmt.Printf("Row %d: %v\n", i, row)
+	// }
 
 	for i := 0; i < numRows; i++ {
 		for j := 0; j < numCols; j++ {
 			// fmt.Print(string(grid[i][j]))
 			for _, dir := range directions {
-				isWord := findWord(grid, dir, i, j, numRows, numCols)
+				isWord := findXMAS(grid, dir, i, j, numRows, numCols)
 				if isWord {
 					// fmt.Print("*")
 					count++
@@ -82,13 +114,35 @@ func partOne(data string) int {
 }
 
 func partTwo(data string) int {
+	grid := utils.GridParse(data)
+	numRows := len(grid)
+	numCols := len(grid[0]) // assuming constant grid size
+	count := 0
 
-	return -1
+	// fmt.Println(numRows, numCols)
+	// for i, row := range grid {
+	// 	fmt.Printf("Row %d: %v\n", i, row)
+	// }
+
+	for i := 0; i < numRows; i++ {
+		for j := 0; j < numCols; j++ {
+			// fmt.Print(string(grid[i][j]))
+			isWord := findMAS(grid, i, j, numRows, numCols)
+			if isWord {
+				// fmt.Print("*")
+				count++
+			}
+		}
+
+		// fmt.Print("\n")
+	}
+
+	return count
 }
 
 func main() {
 	data := utils.FileParse("input.txt")
-	ans := partOne(data)
-	// ans := partTwo(data)
+	// ans := partOne(data)
+	ans := partTwo(data)
 	fmt.Println(ans)
 }

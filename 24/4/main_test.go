@@ -21,7 +21,7 @@ func TestOne(t *testing.T) {
 
 func TestTwo(t *testing.T) {
 	input := utils.FileParse("test.txt")
-	expected := -1
+	expected := 9
 	result := partTwo(input)
 
 	if result != expected {
