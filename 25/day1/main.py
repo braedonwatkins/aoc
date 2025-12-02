@@ -29,24 +29,66 @@ def partOne(input: str):
 
     return total
 
+# def partTwo(text_input: str):
+#     print()
+#     lines = line_parse(text_input)
+#     cur = 50 
+#     clicks = 0
+#
+#     for line in lines:
+#         sign = -1 if line[0] == 'L' else 1
+#         num = int(line[1:])
+#         next = (cur + sign*num) % 100
+#
+#         if sign == -1:
+#             clicks += ((100-cur)%100 + num)//100
+#         else:
+#             clicks += (cur + num)//100
+#
+#         # print(next, clicks)
+#
+#         cur = next
+#
+#
+#
+#     return clicks
+
 def partTwo(text_input: str):
     print()
     lines = line_parse(text_input)
     cur = 50 
     clicks = 0
-    
+
     for line in lines:
         sign = -1 if line[0] == 'L' else 1
         num = int(line[1:])
-        
-        if sign == -1:
-            clicks += ((100-cur)%100 + num)//100
-            num *= sign
-        else:
-            clicks += (cur + num)//100
+        next = (cur + sign*num)
 
-        cur = (cur + num) % 100
-        
-         
-    
+        if next == 0:
+            clicks += 1
+
+        while next > 99:
+            if next == 0:
+                clicks += 1
+
+            next -= 100
+
+            clicks += 1
+        while next < 0:
+            next += 100
+
+            if next == 0:
+                clicks += 1
+
+
+            if cur == 0:
+                cur = next
+            else:
+                clicks += 1
+
+        # print(line, next, clicks)
+
+
+        cur = next
+
     return clicks
