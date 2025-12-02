@@ -8,8 +8,8 @@ def test_one():
     assert result == expected, f"expected result was {expected}, but got {result} instead"
 
 def test_two():
-    input_data = file_parse("test.txt")
-    expected = 6
+    input_data = file_parse("input.txt")
+    expected = 6358
     result = partTwo(input_data)
     assert result == expected, f"expected result was {expected}, but got {result} instead"
 
